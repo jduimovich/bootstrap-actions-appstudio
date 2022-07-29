@@ -4,6 +4,7 @@ CNAME=$2
 INAME=$3
 echo $APPNAME $APPNAME 
 
+mkdir -p output
 yq app.yaml | 
     yq e '.metadata.name = "'$APPNAME'"' |  
     yq e '.spec.displayName = "'$APPNAME'"' |
