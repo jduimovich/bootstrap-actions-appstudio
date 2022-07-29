@@ -1,0 +1,16 @@
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: Component
+metadata:
+  name: component-name-to-be-updated 
+spec:
+  componentName: component-name-to-be-updated 
+  application: app-name-to-be-updated 
+  containerImage: container-name-to-be-updated
+  targetPort: 8080
+  replicas: 1
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+  build:
+    containerImage: container-name-to-be-updated

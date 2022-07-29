@@ -1,0 +1,37 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: pipeline-run-name-to-be-updated
+  labels:
+    build.appstudio.openshift.io/application: app-name-to-be-updated
+    build.appstudio.openshift.io/component: component-name-to-be-updated
+    build.appstudio.openshift.io/build: "true"
+    build.appstudio.openshift.io/type: build
+    build.appstudio.openshift.io/version: "0.1"
+    pipelines.appstudio.openshift.io/type: build
+    pipelines.openshift.io/runtime: generic
+    pipelines.openshift.io/strategy: docker
+    pipelines.openshift.io/used-by: build-cloud
+    tekton.dev/pipeline: docker-build
+  annotations:
+    build.appstudio.openshift.io/application: app-name-to-be-updated
+    build.appstudio.openshift.io/component: component-name-to-be-updated 
+    build.appstudio.openshift.io/build: "true"
+    build.appstudio.openshift.io/type: build
+    build.appstudio.openshift.io/version: "0.1"
+    pipelines.appstudio.openshift.io/type: build
+spec:
+  pipelineRef:
+    name: watch-logs-pipeline
+    bundle: quay.io/jduimovich0/watcher:latest
+  params:
+    - name: OWNER
+      value: TO_BE_FILLED_IN
+    - name: REPO
+      value: TO_BE_FILLED_IN
+    - name: WORKFLOW_ID
+      value: TO_BE_FILLED_IN
+  workspaces:
+    - name: secrets
+      secret:
+        secretName: token-secret 
