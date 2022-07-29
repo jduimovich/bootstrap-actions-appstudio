@@ -1,0 +1,26 @@
+
+APPNAME=$1
+CNAME=$2
+INAME=$3
+echo $APPNAME $APPNAME 
+
+yq app.yaml | 
+    yq e '.metadata.name = "'$APPNAME'"' |  
+    yq e '.spec.displayName = "'$APPNAME'"' |
+   tee output/app.yaml
+
+yq component.yaml | 
+    yq e '.metadata.name = "'$CNAME'"' |
+    yq e '.spec.componentName = "'$CNAME'"' |
+    yq e '.spec.application = "'$APPNAME'"' |
+    yq e '.spec.containerImage =  "'$INAME'"' |
+    yq e '.spec.build.containerImage =  "'$INAME'"' |
+    tee output/component.yaml
+
+yq pipelinerun.yaml | 
+    yq e '.metadata.name = "'$APPNAME'"' | 
+    yq e '.metadata.labels."build.appstudio.openshift.io/application" = "'$APPNAME'"' |
+    yq e '.metadata.labels."build.appstudio.openshift.io/component" = "'$CNAME'"' |
+    yq e '.metadata.annotations."build.appstudio.openshift.io/application" = "'$APPNAME'"' |
+    yq e '.metadata.annotations."build.appstudio.openshift.io/component" = "'$CNAME'"' |
+    tee output/pipelinerun.yaml
